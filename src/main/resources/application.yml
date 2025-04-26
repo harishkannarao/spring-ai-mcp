@@ -1,0 +1,114 @@
+server:
+  port: 8080
+  servlet:
+    context-path: "/spring-ai"
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      max-file-size: "20MB"
+      max-request-size: "20MB"
+  application:
+    name: "spring-ai"
+  threads:
+    virtual:
+      enabled: true
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: "spring-ai-mcp-server"
+        version: 1.0.0
+        type: SYNC
+        sse-message-endpoint: "/mcp/message"
+        sse-endpoint: "/sse"
+      client:
+        enabled: true
+        name: "spring-ai-mcp-client"
+        version: 1.0.0
+        type: SYNC
+        sse:
+          connections:
+            spring-ai-mcp-server:
+              url: "http://localhost:${server.port}/spring-ai"
+              sse-endpoint: "/sse"
+    chat:
+      client:
+        enabled: false
+    bedrock:
+      aws:
+        region: "${AI_BEDROCK_AWS_REGION:eu-west-2}"
+        access-key: "${AWS_AI_ACCESS_KEY_ID}"
+        secret-key: "${AWS_AI_SECRET_ACCESS_KEY}"
+        timeout: "10m"
+      converse:
+        chat:
+          enabled: "${AI_BEDROCK_CHAT_ENABLED:false}"
+          options:
+            model: "${AI_BEDROCK_CHAT_MODEL:meta.llama3-8b-instruct-v1:0}"
+      cohere:
+        embedding:
+          enabled: "${AI_BEDROCK_EMBEDDING_ENABLED:false}"
+          model: "${AI_BEDROCK_EMBEDDING_MODEL:cohere.embed-multilingual-v3}"
+    ollama:
+      base-url: "${AI_OLLAMA_BASE_URL:http://localhost:11434}"
+    vectorstore:
+      pgvector:
+        schema-name: "public"
+        table-name: "rag_vector_store"
+        index-type: "${AI_VECTOR_INDEX_TYPE:HNSW}"
+        dimensions: "${AI_EMBEDDING_DIMENSIONS:1024}"
+        distance-type: COSINE_DISTANCE
+        batching-strategy: TOKEN_COUNT # Optional: Controls how documents are batched for embedding
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+        schema-validation: true
+  flyway:
+    enabled: ${AI_CREATE_PG_VECTOR_DATABASE:true}
+    placeholders:
+      embeddingDimensions: ${spring.ai.vectorstore.pgvector.dimensions}
+      vectorIndexType: ${spring.ai.vectorstore.pgvector.index-type}
+  datasource:
+    hikari:
+      jdbc-url: "${DATASOURCE_URL:jdbc:postgresql://localhost:5432/mydatabase}"
+      username: "${DATASOURCE_USERNAME:myuser}"
+      password: "${DATASOURCE_PASSWORD:secret}"
+      maximum-pool-size: 30
+      driver:
+        class:
+          name: org.postgresql.Driver
+app:
+  ai:
+    chat_history:
+      table_name: "chat_history_vector_store"
+    secure_rag:
+      table_name: "secure_rag_vector_store"
+    chat:
+      provider: "${APP_AI_CHAT_PROVIDER:ollama}"
+      model: "${APP_AI_CHAT_MODEL:llama3.2:3b}"
+    embedding:
+      provider: "${APP_AI_EMBEDDING_PROVIDER:ollama}"
+      model: "${APP_AI_EMBEDDING_MODEL:mxbai-embed-large}"
+    image-extraction:
+      provider: "${APP_AI_IMAGE_EXTRACTION_PROVIDER:ollama}"
+      model: "${APP_AI_IMAGE_EXTRACTION_MODEL:llava:7b}"
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %X{x_request_id:-no_request_id} %m %wEx %n'
+  level:
+    web: INFO
+    org:
+      springframework:
+        ai: INFO
+
+logback-access:
+  pattern: '%t{yyyy-MM-dd HH:mm:ss.SSS} ACCESS_LOG %D %B %s %i{x-forwarded-for} %reqAttribute{x_request_id} %m %U%q'
+
+logback.access:
+  enabled: "${ACCESS_LOG_ENABLED:true}"
+  tee-filter:
+    enabled: "${ACCESS_TEE_LOG_ENABLED:true}"
