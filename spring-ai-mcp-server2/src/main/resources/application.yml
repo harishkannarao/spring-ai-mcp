@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   application:
-    name: "spring-ai-mcp-server1"
+    name: "spring-ai-mcp-server2"
   threads:
     virtual:
       enabled: true
@@ -11,7 +11,7 @@ spring:
     mcp:
       server:
         enabled: true
-        name: "spring-ai-mcp-server1"
+        name: "spring-ai-mcp-server2"
         version: 1.0.0
         type: SYNC
         sse-message-endpoint: "/mcp/message"
