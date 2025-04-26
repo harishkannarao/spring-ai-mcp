@@ -1,6 +1,6 @@
-package com.harishkannarao.spring.spring_ai.config;
+package com.harishkannarao.spring.spring_ai.mcp.client.config;
 
-import com.harishkannarao.spring.spring_ai.filter.RequestTracingFilter;
+import com.harishkannarao.spring.spring_ai.mcp.client.filter.RequestTracingFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

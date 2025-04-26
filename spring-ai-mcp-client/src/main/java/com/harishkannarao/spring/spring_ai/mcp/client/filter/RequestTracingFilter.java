@@ -1,4 +1,4 @@
-package com.harishkannarao.spring.spring_ai.filter;
+package com.harishkannarao.spring.spring_ai.mcp.client.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.harishkannarao.spring.spring_ai.util.Constants.X_REQUEST_ID;
+import static com.harishkannarao.spring.spring_ai.mcp.client.util.Constants.X_REQUEST_ID;
 
 public class RequestTracingFilter extends OncePerRequestFilter {
 	public static final String NAME = "requestIdFilterBean";

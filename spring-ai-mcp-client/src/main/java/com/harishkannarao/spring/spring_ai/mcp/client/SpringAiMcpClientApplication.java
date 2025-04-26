@@ -1,13 +1,13 @@
-package com.harishkannarao.spring.spring_ai;
+package com.harishkannarao.spring.spring_ai.mcp.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringAiApplication {
+public class SpringAiMcpClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringAiApplication.class, args);
+		SpringApplication.run(SpringAiMcpClientApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.harishkannarao.spring.spring_ai.config;
+package com.harishkannarao.spring.spring_ai.mcp.client.config;
 
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -28,42 +28,6 @@ public class OllamaConfiguration {
 			.defaultOptions(
 				OllamaOptions.builder()
 					.model(ollamaChatModel)
-					.temperature(0.9)
-					.build()
-			)
-			.build();
-	}
-
-	@Bean
-	@ConditionalOnProperty(name = "app.ai.image-extraction.provider", havingValue = "ollama")
-	@Qualifier("imageExtractionModel")
-	public ChatModel defaultImageExtractionModel(
-		OllamaApi ollamaApi,
-		@Value("${app.ai.image-extraction.model}") String ollamaImageExtractionModel
-	) {
-		return OllamaChatModel.builder()
-			.ollamaApi(ollamaApi)
-			.defaultOptions(
-				OllamaOptions.builder()
-					.model(ollamaImageExtractionModel)
-					.temperature(0.9)
-					.build()
-			)
-			.build();
-	}
-
-	@Bean
-	@ConditionalOnProperty(name = "app.ai.embedding.provider", havingValue = "ollama")
-	@Primary
-	public EmbeddingModel defaultEmbeddingModel(
-		OllamaApi ollamaApi,
-		@Value("${app.ai.embedding.model}") String ollamaEmbeddingModel
-	) {
-		return OllamaEmbeddingModel.builder()
-			.ollamaApi(ollamaApi)
-			.defaultOptions(
-				OllamaOptions.builder()
-					.model(ollamaEmbeddingModel)
 					.temperature(0.9)
 					.build()
 			)
