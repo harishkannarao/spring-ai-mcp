@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: "/spring-ai-mcp-client"
 
 spring:
   application:
@@ -17,10 +19,10 @@ spring:
         sse:
           connections:
             spring-ai-mcp-server1:
-              url: "http://localhost:8081"
+              url: "http://localhost:8081/spring-ai-mcp-server1"
               sse-endpoint: "/sse"
             spring-ai-mcp-server2:
-              url: "http://localhost:8082"
+              url: "http://localhost:8082/spring-ai-mcp-server2"
               sse-endpoint: "/sse"
     chat:
       client:

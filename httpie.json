@@ -19,7 +19,7 @@
     "requests": [
       {
         "name": "MCP - Get Real Time Info",
-        "url": "http://localhost:8080/chat-with-tools",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
         "method": "GET",
         "headers": [
           {
@@ -60,7 +60,7 @@
       },
       {
         "name": "MCP - Take Real Time Action",
-        "url": "http://localhost:8080/chat-with-tools",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
         "method": "GET",
         "headers": [
           {
@@ -101,7 +101,7 @@
       },
       {
         "name": "MCP - Get Weather Info",
-        "url": "http://localhost:8080/chat-with-tools",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
         "method": "GET",
         "headers": [
           {
