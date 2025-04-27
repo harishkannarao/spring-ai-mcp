@@ -16,3 +16,11 @@ This repository is a playground for learning and experimenting new ideas in MCP 
 ### Build command
 
     ./mvnw clean install
+
+### Run MCP Servers and Client applications
+
+    ./mvnw clean spring-boot:run -pl spring-ai-mcp-server1
+
+    ./mvnw clean spring-boot:run -pl spring-ai-mcp-server2
+
+    ./mvnw clean spring-boot:run -pl spring-ai-mcp-client
