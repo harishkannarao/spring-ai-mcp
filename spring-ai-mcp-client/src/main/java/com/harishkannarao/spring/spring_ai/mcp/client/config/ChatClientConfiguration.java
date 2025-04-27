@@ -4,6 +4,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.tool.ToolCallback;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +16,7 @@ public class ChatClientConfiguration {
 	@Bean
 	public ChatClient chatClientWithTools(
 		ChatModel chatModel,
-		List<ToolCallback> tools) {
+		@Qualifier("remoteMcpTools") List<ToolCallback> tools) {
 		return ChatClient.builder(chatModel)
 			.defaultTools(tools)
 			.defaultAdvisors(List.of(new SimpleLoggerAdvisor()))

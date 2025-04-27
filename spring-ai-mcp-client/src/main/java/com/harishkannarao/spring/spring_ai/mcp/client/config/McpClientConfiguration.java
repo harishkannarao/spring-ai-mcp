@@ -5,6 +5,7 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallback;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,7 @@ public class McpClientConfiguration {
 	}
 
 	@Bean
+	@Qualifier("remoteMcpTools")
 	public List<ToolCallback> remoteMcpTools(List<McpSyncClient> mcpSyncClients) {
 		return SyncMcpToolCallbackProvider.syncToolCallbacks(mcpSyncClients);
 	}
