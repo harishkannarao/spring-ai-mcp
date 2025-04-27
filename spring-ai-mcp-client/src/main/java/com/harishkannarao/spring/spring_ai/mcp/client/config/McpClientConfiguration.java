@@ -28,19 +28,19 @@ public class McpClientConfiguration {
 		return mcpSyncClient;
 	}
 
-//	@Bean
-//	public McpSyncClient createClientForServer2(
-//		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server2.url}")
-//		String url,
-//		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server2.sse-endpoint}")
-//		String sseEndpoint
-//	) {
-//		McpSyncClient mcpSyncClient = McpClient
-//			.sync(HttpClientSseClientTransport.builder(url).sseEndpoint(sseEndpoint).build())
-//			.build();
-//		mcpSyncClient.initialize();
-//		return mcpSyncClient;
-//	}
+	@Bean
+	public McpSyncClient createClientForServer2(
+		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server2.url}")
+		String url,
+		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server2.sse-endpoint}")
+		String sseEndpoint
+	) {
+		McpSyncClient mcpSyncClient = McpClient
+			.sync(HttpClientSseClientTransport.builder(url).sseEndpoint(sseEndpoint).build())
+			.build();
+		mcpSyncClient.initialize();
+		return mcpSyncClient;
+	}
 
 	@Bean
 	public List<ToolCallback> remoteMcpTools(List<McpSyncClient> mcpSyncClients) {
