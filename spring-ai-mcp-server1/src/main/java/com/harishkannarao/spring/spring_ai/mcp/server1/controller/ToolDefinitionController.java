@@ -1,10 +1,9 @@
 package com.harishkannarao.spring.spring_ai.mcp.server1.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.modelcontextprotocol.spec.McpSchema;
 import org.springframework.ai.tool.ToolCallback;
-import org.springframework.ai.tool.definition.ToolDefinition;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,27 +23,20 @@ public class ToolDefinitionController {
 	}
 
 	@GetMapping("tool-definitions")
-	public List<ToolDefinitionDto> getToolDefinitions() {
+	public List<McpSchema.Tool> getToolDefinitions() {
 		return toolCallbacks.stream()
 			.map(toolCallback -> {
 				try {
-					return new ToolDefinitionDto(
+					return new McpSchema.Tool(
 						toolCallback.getToolDefinition().name(),
 						toolCallback.getToolDefinition().description(),
-						objectMapper.readTree(toolCallback.getToolDefinition().inputSchema())
+						objectMapper.readValue(
+							toolCallback.getToolDefinition().inputSchema(), McpSchema.JsonSchema.class)
 					);
 				} catch (JsonProcessingException e) {
 					throw new RuntimeException(e);
 				}
 			})
 			.toList();
-	}
-
-	public record ToolDefinitionDto(
-		String name,
-		String description,
-		JsonNode inputSchema
-	) {
-
 	}
 }

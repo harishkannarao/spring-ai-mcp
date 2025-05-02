@@ -15,7 +15,7 @@ import java.util.List;
 @Configuration
 public class McpClientConfiguration {
 
-	@Bean
+	@Bean("remoteMcpServer1")
 	public McpSyncClient createClientForServer1(
 		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server1.url}")
 		String url,
@@ -29,7 +29,7 @@ public class McpClientConfiguration {
 		return mcpSyncClient;
 	}
 
-	@Bean
+	@Bean("remoteMcpServer2")
 	public McpSyncClient createClientForServer2(
 		@Value("${spring.ai.mcp.client.sse.connections.spring-ai-mcp-server2.url}")
 		String url,
