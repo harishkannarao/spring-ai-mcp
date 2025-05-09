@@ -28,7 +28,7 @@ public class ChatController {
 		this.chatClient = chatClient;
 	}
 
-	@GetMapping("chat-with-tools")
+	@GetMapping("/chat-with-tools")
 	public String chatWithTools(@RequestParam String q) {
 		log.info("Question {}", q);
 		PromptTemplate promptTemplate = new PromptTemplate(questionTemplateResource);

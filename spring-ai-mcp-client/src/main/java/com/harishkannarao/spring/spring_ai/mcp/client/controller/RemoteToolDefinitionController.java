@@ -21,7 +21,7 @@ public class RemoteToolDefinitionController {
 		this.mcpSyncClientMap = mcpSyncClientMap;
 	}
 
-	@GetMapping("remote-tool-definitions")
+	@GetMapping("/remote-tool-definitions")
 	public Map<String, List<McpSchema.Tool>> getToolDefinitions() {
 		return mcpSyncClientMap.entrySet().stream()
 			.map(entry ->

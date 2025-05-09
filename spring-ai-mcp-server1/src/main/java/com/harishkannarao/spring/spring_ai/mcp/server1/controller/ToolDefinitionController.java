@@ -22,7 +22,7 @@ public class ToolDefinitionController {
 		this.objectMapper = objectMapper;
 	}
 
-	@GetMapping("tool-definitions")
+	@GetMapping("/tool-definitions")
 	public List<McpSchema.Tool> getToolDefinitions() {
 		return toolCallbacks.stream()
 			.map(toolCallback -> {
