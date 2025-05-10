@@ -1,5 +1,7 @@
 package com.harishkannarao.spring.spring_ai.mcp.server1.config;
 
+import com.harishkannarao.spring.spring_ai.mcp.server1.filter.CustomAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -10,10 +12,18 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
+
+	private final CustomAuthenticationFilter customAuthenticationFilter;
+
+	@Autowired
+	public SecurityConfig(CustomAuthenticationFilter customAuthenticationFilter) {
+		this.customAuthenticationFilter = customAuthenticationFilter;
+	}
 
 	@Bean
 	public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
@@ -30,7 +40,8 @@ public class SecurityConfig {
 						response.setStatus(HttpStatus.FORBIDDEN.value()));
 				httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(
 					new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-			});
+			})
+			.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
@@ -41,11 +52,12 @@ public class SecurityConfig {
 		// otherwise 401 is returned for all errors
 		auth.requestMatchers("/error").permitAll();
 
+		auth.requestMatchers("/tool-definitions").permitAll();
+
 		auth.requestMatchers(
 			"/sse",
-			"/mcp/message",
-			"/tool-definitions"
-		).permitAll();
+			"/mcp/message"
+		).hasAuthority("ROLE_SERVER_1_USER");
 
 		auth.anyRequest().denyAll();
 	}

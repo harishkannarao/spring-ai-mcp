@@ -18,6 +18,93 @@
     },
     "requests": [
       {
+        "name": "MCP - Server 1 Available Tools",
+        "url": "http://localhost:8081/spring-ai-mcp-server1/tool-definitions",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "MCP - Server 2 Available Tools",
+        "url": "http://localhost:8082/spring-ai-mcp-server2/tool-definitions",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "MCP - Client Discovered Tools",
+        "url": "http://localhost:8080/spring-ai-mcp-client/remote-tool-definitions",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
         "name": "MCP - Get Real Time Info",
         "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
         "method": "GET",
@@ -117,93 +204,6 @@
             "enabled": true
           }
         ],
-        "pathParams": [],
-        "auth": {
-          "type": "inherited"
-        },
-        "body": {
-          "type": "none",
-          "file": {
-            "name": ""
-          },
-          "text": {
-            "value": "",
-            "format": "application/json"
-          },
-          "form": {
-            "isMultipart": false,
-            "fields": []
-          },
-          "graphql": {
-            "query": "",
-            "variables": ""
-          }
-        }
-      },
-      {
-        "name": "MCP - Server 1 Available Tools",
-        "url": "http://localhost:8081/spring-ai-mcp-server1/tool-definitions",
-        "method": "GET",
-        "headers": [],
-        "queryParams": [],
-        "pathParams": [],
-        "auth": {
-          "type": "inherited"
-        },
-        "body": {
-          "type": "none",
-          "file": {
-            "name": ""
-          },
-          "text": {
-            "value": "",
-            "format": "application/json"
-          },
-          "form": {
-            "isMultipart": false,
-            "fields": []
-          },
-          "graphql": {
-            "query": "",
-            "variables": ""
-          }
-        }
-      },
-      {
-        "name": "MCP - Server 2 Available Tools",
-        "url": "http://localhost:8082/spring-ai-mcp-server2/tool-definitions",
-        "method": "GET",
-        "headers": [],
-        "queryParams": [],
-        "pathParams": [],
-        "auth": {
-          "type": "inherited"
-        },
-        "body": {
-          "type": "none",
-          "file": {
-            "name": ""
-          },
-          "text": {
-            "value": "",
-            "format": "application/json"
-          },
-          "form": {
-            "isMultipart": false,
-            "fields": []
-          },
-          "graphql": {
-            "query": "",
-            "variables": ""
-          }
-        }
-      },
-      {
-        "name": "MCP - Client Discovered Tools",
-        "url": "http://localhost:8080/spring-ai-mcp-client/remote-tool-definitions",
-        "method": "GET",
-        "headers": [],
-        "queryParams": [],
         "pathParams": [],
         "auth": {
           "type": "inherited"
