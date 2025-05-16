@@ -1,0 +1,10 @@
+spring:
+  ai:
+    bedrock:
+      converse:
+        chat:
+          enabled: true
+app:
+  ai:
+    chat:
+      provider: "aws"

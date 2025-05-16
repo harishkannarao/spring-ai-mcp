@@ -29,6 +29,17 @@ spring:
     chat:
       client:
         enabled: false
+    bedrock:
+      aws:
+        region: "${AI_BEDROCK_AWS_REGION:us-east-1}"
+        access-key: "${AWS_AI_ACCESS_KEY_ID}"
+        secret-key: "${AWS_AI_SECRET_ACCESS_KEY}"
+        timeout: "10m"
+      converse:
+        chat:
+          enabled: "${AI_BEDROCK_CHAT_ENABLED:false}"
+          options:
+            model: "${AI_BEDROCK_CHAT_MODEL:amazon.nova-pro-v1:0}"
     ollama:
       base-url: "${AI_OLLAMA_BASE_URL:http://localhost:11434}"
 app:

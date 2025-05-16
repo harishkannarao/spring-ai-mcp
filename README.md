@@ -24,3 +24,11 @@ This repository is a playground for learning and experimenting new ideas in MCP 
     ./mvnw clean spring-boot:run -pl spring-ai-mcp-server2
 
     ./mvnw clean spring-boot:run -pl spring-ai-mcp-client
+
+or to run the client against AWS LLM Model
+
+    export AWS_AI_ACCESS_KEY_ID={aws_key_id}
+
+    export AWS_AI_SECRET_ACCESS_KEY={aws_secret_key}
+
+    ./mvnw clean -Dspring-boot.run.profiles=aws spring-boot:run -pl spring-ai-mcp-client
