@@ -267,6 +267,47 @@
             "variables": ""
           }
         }
+      },
+      {
+        "name": "MCP - Multiple tool calls",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "text/plain",
+            "enabled": true
+          }
+        ],
+        "queryParams": [
+          {
+            "name": "q",
+            "value": "How many tickets are available for Avatar Movie? Book me 3 tickets if available. Also tell me what is the weather like in London?",
+            "enabled": true
+          }
+        ],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
       }
     ]
   }
