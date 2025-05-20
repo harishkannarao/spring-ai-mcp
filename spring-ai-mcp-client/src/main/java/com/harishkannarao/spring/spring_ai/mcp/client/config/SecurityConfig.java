@@ -43,6 +43,7 @@ public class SecurityConfig {
 
 		auth.requestMatchers(
 			"/chat-with-tools",
+			"/tool-definitions",
 			"/remote-tool-definitions"
 		).permitAll();
 

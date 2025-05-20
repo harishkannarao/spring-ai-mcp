@@ -76,8 +76,37 @@
         }
       },
       {
-        "name": "MCP - Client Discovered Tools",
+        "name": "MCP - Client Discovered Remote Tools",
         "url": "http://localhost:8080/spring-ai-mcp-client/remote-tool-definitions",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "MCP - Client Local Tools",
+        "url": "http://localhost:8080/spring-ai-mcp-client/tool-definitions",
         "method": "GET",
         "headers": [],
         "queryParams": [],
@@ -269,6 +298,88 @@
         }
       },
       {
+        "name": "MCP - Get Book Suggestion by Genre",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "text/plain",
+            "enabled": true
+          }
+        ],
+        "queryParams": [
+          {
+            "name": "q",
+            "value": "Suggest 2 good books in Mystery Genre",
+            "enabled": true
+          }
+        ],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "MCP - Get Stock Price",
+        "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "text/plain",
+            "enabled": true
+          }
+        ],
+        "queryParams": [
+          {
+            "name": "q",
+            "value": "What is the stock price of ACME Limited",
+            "enabled": true
+          }
+        ],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
         "name": "MCP - Multiple tool calls",
         "url": "http://localhost:8080/spring-ai-mcp-client/chat-with-tools",
         "method": "GET",
@@ -282,7 +393,7 @@
         "queryParams": [
           {
             "name": "q",
-            "value": "How many tickets are available for Avatar Movie? Book me 3 tickets if available. Also tell me what is the weather like in London?",
+            "value": "How many tickets are available for Avatar Movie? Book me 3 tickets if available. \n\nAlso tell me what is the weather like in London?\n\nSuggest some 5 good book in fiction genre to read while travelling.",
             "enabled": true
           }
         ],
