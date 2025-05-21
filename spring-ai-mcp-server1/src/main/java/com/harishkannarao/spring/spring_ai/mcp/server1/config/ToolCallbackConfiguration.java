@@ -1,33 +1,19 @@
 package com.harishkannarao.spring.spring_ai.mcp.server1.config;
 
-import com.harishkannarao.spring.spring_ai.mcp.server1.tools.TicketBookingService;
-import com.harishkannarao.spring.spring_ai.mcp.server1.tools.TicketInventoryService;
+import com.harishkannarao.spring.spring_ai.mcp.server1.tools.AiTool;
+import org.springframework.ai.support.ToolCallbacks;
 import org.springframework.ai.tool.ToolCallback;
-import org.springframework.ai.tool.function.FunctionToolCallback;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 @Configuration
 public class ToolCallbackConfiguration {
 
 	@Bean
-	public ToolCallback createTicketInventoryService(TicketInventoryService ticketInventoryService) {
-		return FunctionToolCallback
-			.builder("ticketInventoryService", ticketInventoryService)
-			.description("Get the available ticket count by movie name")
-			.inputType(TicketInventoryService.Request.class)
-			.build();
-	}
-
-	@Bean
-	public ToolCallback createTicketBookingService(TicketBookingService ticketBookingService) {
-		return FunctionToolCallback
-			.builder("ticketBookingService", ticketBookingService)
-			.description("""
-				Book tickets for a movie.
-				Input parameters are movie name and total number of tickets to book
-				""")
-			.inputType(TicketBookingService.Request.class)
-			.build();
+	public List<ToolCallback> toolCallbacks(List<AiTool> aiTools) {
+		return Stream.of(ToolCallbacks.from(aiTools.toArray())).toList();
 	}
 }

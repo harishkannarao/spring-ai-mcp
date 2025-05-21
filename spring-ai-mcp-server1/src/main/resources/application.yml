@@ -16,6 +16,7 @@ spring:
         name: "spring-ai-mcp-server1"
         version: 1.0.0
         type: SYNC
+        base-url: "${server.servlet.context-path}"
         sse-message-endpoint: "/mcp/message"
         sse-endpoint: "/sse"
 

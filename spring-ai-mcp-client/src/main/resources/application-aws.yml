@@ -1,10 +1,8 @@
 spring:
   ai:
-    bedrock:
-      converse:
-        chat:
-          enabled: true
+    model:
+      chat: "bedrock-converse"
 app:
   ai:
     chat:
-      provider: "aws"
+      provider: "bedrock-converse"

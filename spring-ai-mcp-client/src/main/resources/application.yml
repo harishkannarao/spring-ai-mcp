@@ -10,6 +10,8 @@ spring:
     virtual:
       enabled: true
   ai:
+    model:
+      chat: "${APP_AI_CHAT_PROVIDER:ollama}"
     mcp:
       client:
         enabled: false
@@ -19,12 +21,12 @@ spring:
         sse:
           connections:
             spring-ai-mcp-server1:
-              url: "http://localhost:8081/spring-ai-mcp-server1"
-              sse-endpoint: "/sse"
+              url: "http://localhost:8081"
+              sse-endpoint: "/spring-ai-mcp-server1/sse"
               auth-token: "server1-secret-token"
             spring-ai-mcp-server2:
-              url: "http://localhost:8082/spring-ai-mcp-server2"
-              sse-endpoint: "/sse"
+              url: "http://localhost:8082"
+              sse-endpoint: "/spring-ai-mcp-server2/sse"
               auth-token: "server2-secret-token"
     chat:
       client:
@@ -37,7 +39,6 @@ spring:
         timeout: "10m"
       converse:
         chat:
-          enabled: "${AI_BEDROCK_CHAT_ENABLED:false}"
           options:
             model: "${AI_BEDROCK_CHAT_MODEL:amazon.nova-pro-v1:0}"
     ollama:

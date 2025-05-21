@@ -2,16 +2,15 @@ package com.harishkannarao.spring.spring_ai.mcp.client.tools;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 @Component
-public class GoodBookSuggestionService
-	implements Function<GoodBookSuggestionService.Request, GoodBookSuggestionService.Response> {
+public class GoodBookSuggestionService implements AiTool {
 
 	private static final Logger log = LoggerFactory.getLogger(GoodBookSuggestionService.class);
 
@@ -21,8 +20,13 @@ public class GoodBookSuggestionService
 	);
 	private final List<String> defaultBookList = List.of("book9", "book10", "book11");
 
-	@Override
-	public Response apply(Request request) {
+	@Tool(
+		name = "goodBookSuggestionService",
+		description = """
+			Get suggestion of good books for a given genre.
+				Also set the limit of books titles to return.
+			""")
+	public Response listBooks(Request request) {
 		log.info("request {}", request);
 		List<String> bookList = bookGenreMap
 			.getOrDefault(request.genre().toLowerCase(), defaultBookList)

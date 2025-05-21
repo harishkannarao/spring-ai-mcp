@@ -24,7 +24,7 @@ public class ChatClientConfiguration {
 			.flatMap(Collection::stream)
 			.toList();
 		return ChatClient.builder(chatModel)
-			.defaultTools(allTools)
+			.defaultToolCallbacks(allTools)
 			.defaultAdvisors(List.of(new SimpleLoggerAdvisor()))
 			.defaultSystem("You are a helpful AI Assistant answering questions")
 			.build();
