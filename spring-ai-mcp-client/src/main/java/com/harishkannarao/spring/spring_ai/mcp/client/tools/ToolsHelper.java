@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -41,7 +42,8 @@ public class ToolsHelper implements DisposableBean {
 		this.objectMapper = objectMapper;
 		this.localAiTools = localAiTools;
 		this.remoteMcpClientSuppliers = remoteMcpClientSuppliers;
-		executorService.scheduleWithFixedDelay(this::reInitializeClient, 0, 10, TimeUnit.SECONDS);
+		CompletableFuture.runAsync(this::reInitializeClient, executorService);
+		executorService.scheduleWithFixedDelay(this::reInitializeClient, 10, 10, TimeUnit.SECONDS);
 	}
 
 	public Map<String, McpSyncClient> allActiveClients() {
@@ -51,10 +53,7 @@ public class ToolsHelper implements DisposableBean {
 	}
 
 	public List<ToolCallback> allActiveTools() {
-		List<McpSyncClient> activeRemoteClients = mcpClients.entrySet().stream()
-			.filter(entry -> isMcpClientActive(entry.getKey(), entry.getValue()))
-			.map(Map.Entry::getValue)
-			.toList();
+		List<McpSyncClient> activeRemoteClients = allActiveClients().values().stream().toList();
 		Stream<ToolCallback> remoteToolCallbacks = SyncMcpToolCallbackProvider
 			.syncToolCallbacks(activeRemoteClients).stream();
 		Stream<ToolCallback> localToolCallbacks = Stream.of(ToolCallbacks.from(localAiTools.toArray()));
@@ -79,7 +78,7 @@ public class ToolsHelper implements DisposableBean {
 	}
 
 	public Map<String, List<McpSchema.Tool>> getRemoteToolsDefinition() {
-		return mcpClients.entrySet().stream()
+		return allActiveClients().entrySet().stream()
 			.map(entry ->
 				Map.entry(entry.getKey(), entry.getValue().listTools().tools()))
 			.collect(Collectors.toUnmodifiableMap(
