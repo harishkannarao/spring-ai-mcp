@@ -44,7 +44,8 @@ public class SecurityConfig {
 		auth.requestMatchers(
 			"/chat-with-tools",
 			"/tool-definitions",
-			"/remote-tool-definitions"
+			"/remote-tool-definitions",
+			"/remote-tool-status"
 		).permitAll();
 
 		auth.anyRequest().denyAll();

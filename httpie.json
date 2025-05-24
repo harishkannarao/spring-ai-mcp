@@ -105,6 +105,35 @@
         }
       },
       {
+        "name": "MCP - Remote Tools Status",
+        "url": "http://localhost:8080/spring-ai-mcp-client/remote-tool-status",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
         "name": "MCP - Client Local Tools",
         "url": "http://localhost:8080/spring-ai-mcp-client/tool-definitions",
         "method": "GET",

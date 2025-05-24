@@ -1,5 +1,6 @@
 package com.harishkannarao.spring.spring_ai.mcp.client.controller;
 
+import com.harishkannarao.spring.spring_ai.mcp.client.tools.ToolsHelper;
 import com.harishkannarao.spring.spring_ai.mcp.client.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,13 @@ public class ChatController {
 	private final ClassPathResource questionTemplateResource = new ClassPathResource(
 		"/prompts/question-template.st");
 	private final ChatClient chatClient;
+	private final ToolsHelper toolsHelper;
 
-	public ChatController(ChatClient chatClient) {
+	public ChatController(
+		ChatClient chatClient,
+		ToolsHelper toolsHelper) {
 		this.chatClient = chatClient;
+		this.toolsHelper = toolsHelper;
 	}
 
 	@GetMapping("/chat-with-tools")
@@ -39,6 +44,7 @@ public class ChatController {
 		Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
 		return chatClient
 			.prompt(prompt)
+			.toolCallbacks(toolsHelper.allActiveTools())
 			.toolContext(Map.of(Constants.X_REQUEST_ID, MDC.get(Constants.X_REQUEST_ID)))
 			.call()
 			.content();
