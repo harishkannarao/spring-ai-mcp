@@ -20,26 +20,26 @@ public class TicketInventoryService implements AiTool {
 
 	@Tool(name = "ticketInventoryService",
 		description = "Get the available ticket count by movie name")
-	public Response apply(Request request, ToolContext toolContext) {
+	public TicketLookupResponse apply(TicketLookupRequest lookupRequest, ToolContext toolContext) {
 		try {
 			Optional.ofNullable(toolContext.getContext().get(X_REQUEST_ID))
 				.ifPresent(o -> MDC.put(X_REQUEST_ID, String.valueOf(o)));
-			log.info("request {}", request);
+			log.info("lookupRequest {}", lookupRequest);
 			long randomPositiveLong = new SecureRandom().longs(0, 200)
 				.findAny()
 				.orElse(0);
-			Response response = new Response(randomPositiveLong);
-			log.info("response {}", response);
-			return response;
+			TicketLookupResponse lookupResponse = new TicketLookupResponse(randomPositiveLong);
+			log.info("lookupResponse {}", lookupResponse);
+			return lookupResponse;
 		} finally {
 			MDC.remove(X_REQUEST_ID);
 		}
 	}
 
-	public record Request(@ToolParam(description = "The name of a movie") String movieName) {
+	public record TicketLookupRequest(@ToolParam(description = "The name of a movie") String movieName) {
 	}
 
-	public record Response(Long availability) {
+	public record TicketLookupResponse(Long availability) {
 	}
 }
 

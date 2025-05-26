@@ -44,7 +44,7 @@ public class ChatController {
 		Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
 		return chatClient
 			.prompt(prompt)
-			.toolCallbacks(toolsHelper.allActiveTools())
+			.toolCallbacks(toolsHelper.getActiveTools())
 			.toolContext(Map.of(Constants.X_REQUEST_ID, MDC.get(Constants.X_REQUEST_ID)))
 			.call()
 			.content();

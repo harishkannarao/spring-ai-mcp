@@ -19,23 +19,23 @@ public class TicketBookingService implements AiTool {
 			Book tickets for a movie.
 			Input parameters are movie name and total number of tickets to book
 			""")
-	public Response apply(Request request) {
-		log.info("request {}", request);
-		List<String> seats = IntStream.range(0, request.count())
+	public TicketBookingResponse apply(TicketBookingRequest bookingRequest) {
+		log.info("bookingRequest {}", bookingRequest);
+		List<String> seats = IntStream.range(0, bookingRequest.count())
 			.boxed()
 			.map(index -> "A" + (index + 1))
 			.toList();
-		Response response = new Response(true, seats);
-		log.info("response {}", response);
-		return response;
+		TicketBookingResponse bookingResponse = new TicketBookingResponse(true, seats);
+		log.info("bookingResponse {}", bookingResponse);
+		return bookingResponse;
 	}
 
-	public record Request(
+	public record TicketBookingRequest(
 		@ToolParam(description = "The name of a movie") String movieName,
 		@ToolParam(description = "Number of tickets to book") Integer count) {
 	}
 
-	public record Response(
+	public record TicketBookingResponse(
 		boolean bookingSuccess,
 		List<String> bookedSeats) {
 	}

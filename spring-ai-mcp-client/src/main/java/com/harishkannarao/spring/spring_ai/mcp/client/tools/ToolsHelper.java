@@ -14,6 +14,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +32,7 @@ public class ToolsHelper implements DisposableBean {
 		Executors.newSingleThreadScheduledExecutor();
 	private final Logger logger = LoggerFactory.getLogger(ToolsHelper.class);
 	private final ConcurrentHashMap<String, McpSyncClient> mcpClients = new ConcurrentHashMap<>();
+	private final AtomicReference<List<ToolCallback>> activeToolCallbacks = new AtomicReference<>(Collections.emptyList());
 	private final ObjectMapper objectMapper;
 	private final List<AiTool> localAiTools;
 	private final List<RemoteMcpClientSupplier> remoteMcpClientSuppliers;
@@ -46,18 +49,23 @@ public class ToolsHelper implements DisposableBean {
 		executorService.scheduleWithFixedDelay(this::reInitializeClient, 10, 10, TimeUnit.SECONDS);
 	}
 
+	public record ClientActiveResult(Boolean active, Map.Entry<String, McpSyncClient> entry) {
+	}
+
 	public Map<String, McpSyncClient> allActiveClients() {
 		return mcpClients.entrySet().stream()
-			.filter(entry -> isMcpClientActive(entry.getKey(), entry.getValue()))
+			.map(entry ->
+				CompletableFuture.supplyAsync(() -> new ClientActiveResult(isMcpClientActive(entry.getKey(), entry.getValue()), entry)))
+			.toList()
+			.stream()
+			.map(CompletableFuture::join)
+			.filter(ClientActiveResult::active)
+			.map(ClientActiveResult::entry)
 			.collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
 
-	public List<ToolCallback> allActiveTools() {
-		List<McpSyncClient> activeRemoteClients = allActiveClients().values().stream().toList();
-		Stream<ToolCallback> remoteToolCallbacks = SyncMcpToolCallbackProvider
-			.syncToolCallbacks(activeRemoteClients).stream();
-		Stream<ToolCallback> localToolCallbacks = Stream.of(ToolCallbacks.from(localAiTools.toArray()));
-		return Stream.concat(localToolCallbacks, remoteToolCallbacks).toList();
+	public List<ToolCallback> getActiveTools() {
+		return activeToolCallbacks.get();
 	}
 
 	public List<McpSchema.Tool> getLocalToolsDefinition() {
@@ -89,8 +97,8 @@ public class ToolsHelper implements DisposableBean {
 
 	private void reInitializeClient() {
 		logger.info("Re-Initializing remote mcp clients");
-		remoteMcpClientSuppliers
-			.forEach(supplier -> {
+		remoteMcpClientSuppliers.stream()
+			.map(supplier -> CompletableFuture.runAsync(() -> {
 				try {
 					if (!mcpClients.containsKey(supplier.getServerName())) {
 						mcpClients.putIfAbsent(supplier.getServerName(), supplier.createClient());
@@ -107,7 +115,18 @@ public class ToolsHelper implements DisposableBean {
 				} catch (Exception e) {
 					logger.error("Remote Server {} cannot be initialised. Exception {}", supplier.getServerName(), e.getMessage(), e);
 				}
-			});
+			}))
+			.toList()
+			.forEach(CompletableFuture::join);
+		activeToolCallbacks.set(checkAndGetActiveTools());
+	}
+
+	private List<ToolCallback> checkAndGetActiveTools() {
+		List<McpSyncClient> activeRemoteClients = allActiveClients().values().stream().toList();
+		Stream<ToolCallback> remoteToolCallbacks = SyncMcpToolCallbackProvider
+			.syncToolCallbacks(activeRemoteClients).stream();
+		Stream<ToolCallback> localToolCallbacks = Stream.of(ToolCallbacks.from(localAiTools.toArray()));
+		return Stream.concat(localToolCallbacks, remoteToolCallbacks).toList();
 	}
 
 	private boolean isMcpClientActive(String serverName, McpSyncClient mcpSyncClient) {
