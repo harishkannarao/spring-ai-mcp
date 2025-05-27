@@ -49,13 +49,13 @@ public class ToolsHelper implements DisposableBean {
 		executorService.scheduleWithFixedDelay(this::reInitializeClient, 10, 10, TimeUnit.SECONDS);
 	}
 
-	public record ClientActiveResult(Boolean active, Map.Entry<String, McpSyncClient> entry) {
-	}
-
 	public Map<String, McpSyncClient> allActiveClients() {
+		record ClientActiveResult(Boolean active, Map.Entry<String, McpSyncClient> entry) {
+		}
 		return mcpClients.entrySet().stream()
 			.map(entry ->
-				CompletableFuture.supplyAsync(() -> new ClientActiveResult(isMcpClientActive(entry.getKey(), entry.getValue()), entry)))
+				CompletableFuture.supplyAsync(() ->
+					new ClientActiveResult(isMcpClientActive(entry.getKey(), entry.getValue()), entry)))
 			.toList()
 			.stream()
 			.map(CompletableFuture::join)
