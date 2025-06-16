@@ -1,0 +1,9 @@
+spring:
+  ai:
+    model:
+      chat: "openai"
+
+app:
+  ai:
+    chat:
+      provider: "openai"
