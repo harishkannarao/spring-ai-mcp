@@ -21,11 +21,11 @@ spring:
         sse:
           connections:
             spring-ai-mcp-server1:
-              url: "http://localhost:8081"
+              url: "${SPRING_AI_MCP_SERVER1_URL:http://localhost:8081}"
               sse-endpoint: "/spring-ai-mcp-server1/sse"
               auth-token: "server1-secret-token"
             spring-ai-mcp-server2:
-              url: "http://localhost:8082"
+              url: "${SPRING_AI_MCP_SERVER2_URL:http://localhost:8082}"
               sse-endpoint: "/spring-ai-mcp-server2/sse"
               auth-token: "server2-secret-token"
     chat:

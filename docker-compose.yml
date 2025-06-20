@@ -1,0 +1,40 @@
+networks:
+  main:
+
+services:
+  spring-ai-mcp-client:
+    container_name: spring-ai-mcp-client
+    image: "com.harishkannarao/spring-ai-mcp-client:latest"
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
+      - "SPRING_AI_MCP_SERVER1_URL=http://spring-ai-mcp-server1:8081"
+      - "SPRING_AI_MCP_SERVER2_URL=http://spring-ai-mcp-server2:8082"
+      - "OPEN_AI_KEY=$OPEN_AI_KEY"
+      - "AWS_AI_ACCESS_KEY_ID=$AWS_AI_ACCESS_KEY_ID"
+      - "AWS_AI_SECRET_ACCESS_KEY=$AWS_AI_SECRET_ACCESS_KEY"
+    networks:
+      main:
+        aliases:
+          - spring-ai-mcp-client
+
+  spring-ai-mcp-server1:
+    container_name: spring-ai-mcp-server1
+    image: "com.harishkannarao/spring-ai-mcp-server1:latest"
+    ports:
+      - "8081:8081"
+    networks:
+      main:
+        aliases:
+          - spring-ai-mcp-server1
+
+  spring-ai-mcp-server2:
+    container_name: spring-ai-mcp-server2
+    image: "com.harishkannarao/spring-ai-mcp-server2:latest"
+    ports:
+      - "8082:8082"
+    networks:
+      main:
+        aliases:
+          - spring-ai-mcp-server2
