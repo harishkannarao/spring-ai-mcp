@@ -7,10 +7,13 @@ services:
     image: "com.harishkannarao/spring-ai-mcp-client:latest"
     ports:
       - "8080:8080"
+    extra_hosts:
+      - host.docker.internal:host-gateway
     environment:
       - "SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
       - "SPRING_AI_MCP_SERVER1_URL=http://spring-ai-mcp-server1:8081"
       - "SPRING_AI_MCP_SERVER2_URL=http://spring-ai-mcp-server2:8082"
+      - "AI_OLLAMA_BASE_URL=http://host.docker.internal:11434"
       - "OPEN_AI_KEY=$OPEN_AI_KEY"
       - "AWS_AI_ACCESS_KEY_ID=$AWS_AI_ACCESS_KEY_ID"
       - "AWS_AI_SECRET_ACCESS_KEY=$AWS_AI_SECRET_ACCESS_KEY"
