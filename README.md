@@ -42,3 +42,13 @@ or to run the client against AWS LLM Model
     export AWS_AI_SECRET_ACCESS_KEY={aws_secret_key}
 
     ./mvnw clean -Dspring-boot.run.profiles=aws spring-boot:run -pl spring-ai-mcp-client
+
+### Run MCP Servers and Client applications using docker compose
+
+    export SPRING_PROFILES_ACTIVE="aws"
+
+or
+
+    export SPRING_PROFILES_ACTIVE="openai"
+
+    ./docker-compose-run.sh
