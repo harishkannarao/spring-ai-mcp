@@ -1,5 +1,6 @@
 networks:
   main:
+    name: spring-ai-mcp-network
 
 services:
   spring-ai-mcp-client:
