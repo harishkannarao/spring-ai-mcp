@@ -17,6 +17,10 @@ This repository is a playground for learning and experimenting new ideas in MCP 
 
     ./mvnw clean install
 
+### Skip all tests and generate artefacts
+
+    ./mvnw clean install -DskipTests
+
 ### Run MCP Servers and Client applications
 
     ./mvnw clean spring-boot:run -pl spring-ai-mcp-server1
