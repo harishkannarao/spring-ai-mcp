@@ -26,19 +26,19 @@ public class GoodBookSuggestionService implements AiTool {
 			Get suggestion of good books for a given genre.
 				Also set the limit of books titles to return.
 			""")
-	public Response listBooks(Request request) {
-		log.info("request {}", request);
+	public ListBooksResponse listBooks(ListBooksRequest listBooksRequest) {
+		log.info("listBooksRequest {}", listBooksRequest);
 		List<String> bookList = bookGenreMap
-			.getOrDefault(request.genre().toLowerCase(), defaultBookList)
+			.getOrDefault(listBooksRequest.genre().toLowerCase(), defaultBookList)
 			.stream()
-			.limit(request.limit())
+			.limit(listBooksRequest.limit())
 			.toList();
-		Response response = new Response(bookList);
-		log.info("response {}", response);
-		return response;
+		ListBooksResponse listBooksResponse = new ListBooksResponse(bookList);
+		log.info("response {}", listBooksResponse);
+		return listBooksResponse;
 	}
 
-	public record Request(
+	public record ListBooksRequest(
 		@ToolParam(description = "Literary Genre or Book Genre") String genre,
 		@ToolParam(description = """
 			Total number of books to suggest.
@@ -46,7 +46,7 @@ public class GoodBookSuggestionService implements AiTool {
 			""") Integer limit) {
 	}
 
-	public record Response(List<String> bookNames) {
+	public record ListBooksResponse(List<String> bookNames) {
 	}
 }
 

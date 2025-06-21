@@ -18,20 +18,20 @@ public class StockPriceService implements AiTool {
 		description = """
 			Lookup the stock price by company name
 			""")
-	public Response lookupStockPrice(Request request) {
-		log.info("request {}", request);
+	public StockPriceLookupResponse lookupStockPrice(StockPriceLookupRequest stockPriceLookupRequest) {
+		log.info("request {}", stockPriceLookupRequest);
 		long randomPositiveLong = new SecureRandom().longs(1, 201)
 			.findAny()
 			.orElse(1);
-		Response response = new Response(randomPositiveLong);
-		log.info("response {}", response);
-		return response;
+		StockPriceLookupResponse stockPriceLookupResponse = new StockPriceLookupResponse(randomPositiveLong);
+		log.info("response {}", stockPriceLookupResponse);
+		return stockPriceLookupResponse;
 	}
 
-	public record Request(@ToolParam(description = "Name of the company") String companyName) {
+	public record StockPriceLookupRequest(@ToolParam(description = "Name of the company") String companyName) {
 	}
 
-	public record Response(Long price) {
+	public record StockPriceLookupResponse(Long price) {
 	}
 }
 
