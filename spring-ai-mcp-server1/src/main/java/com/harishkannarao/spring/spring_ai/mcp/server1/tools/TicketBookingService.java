@@ -6,8 +6,12 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
+
+import static java.util.Objects.nonNull;
 
 @Component
 public class TicketBookingService implements AiTool {
@@ -17,22 +21,30 @@ public class TicketBookingService implements AiTool {
 	@Tool(name = "ticketBookingService",
 		description = """
 			Book tickets for a movie.
-			Input parameters are movie name and total number of tickets to book
+			Input parameters are movie name and total count of tickets to book
 			""")
-	public TicketBookingResponse apply(TicketBookingRequest bookingRequest) {
-		log.info("bookingRequest {}", bookingRequest);
-		List<String> seats = IntStream.range(0, bookingRequest.count())
-			.boxed()
-			.map(index -> "A" + (index + 1))
-			.toList();
-		TicketBookingResponse bookingResponse = new TicketBookingResponse(true, seats);
-		log.info("bookingResponse {}", bookingResponse);
-		return bookingResponse;
+	public TicketBookingResponse apply(
+		@ToolParam(description = "The name of a movie") String movieName,
+		@ToolParam(description = "Count of tickets to book or number of tickets") Integer count) {
+		log.info("bookingRequest {} {}", movieName, count);
+		if (nonNull(movieName) && nonNull(count)) {
+			List<String> seats = IntStream.range(0, count)
+				.boxed()
+				.map(index -> "A" + (index + 1))
+				.toList();
+			TicketBookingResponse bookingResponse = new TicketBookingResponse(true, seats);
+			log.info("bookingResponse {}", bookingResponse);
+			return bookingResponse;
+		} else {
+			TicketBookingResponse unsuccessfulResponse = new TicketBookingResponse(false, Collections.emptyList());
+			log.info("bookingResponse {}", unsuccessfulResponse);
+			return unsuccessfulResponse;
+		}
 	}
 
 	public record TicketBookingRequest(
 		@ToolParam(description = "The name of a movie") String movieName,
-		@ToolParam(description = "Number of tickets to book") Integer count) {
+		@ToolParam(description = "Count of tickets to book or number of tickets") Integer count) {
 	}
 
 	public record TicketBookingResponse(
