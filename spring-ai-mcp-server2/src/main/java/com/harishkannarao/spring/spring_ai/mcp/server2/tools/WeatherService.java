@@ -22,17 +22,17 @@ public class WeatherService implements AiTool {
 	@Tool(name = "weatherService",
 		description = """
 			Get the weather for the given location or village or town or city.
-			The request takes location along with unit in Celsius or Fahrenheit.
+			The getWeatherRequest takes location along with unit in Celsius or Fahrenheit.
 			""")
-	public Response apply(Request request) {
-		log.info("request {}", request);
-		BigDecimal value = weather.getOrDefault(request.location().toLowerCase(), new BigDecimal("25"));
-		Response response = new Response(value, request.unit());
-		log.info("response {}", response);
-		return response;
+	public GetWeatherResponse apply(GetWeatherRequest getWeatherRequest) {
+		log.info("getWeatherRequest {}", getWeatherRequest);
+		BigDecimal value = weather.getOrDefault(getWeatherRequest.location().toLowerCase(), new BigDecimal("25"));
+		GetWeatherResponse getWeatherResponse = new GetWeatherResponse(value, getWeatherRequest.unit());
+		log.info("response {}", getWeatherResponse);
+		return getWeatherResponse;
 	}
 
-	public record Request(
+	public record GetWeatherRequest(
 		@ToolParam(description = "Town or City or Village or Location of the weather") String location,
 		@ToolParam(description = "Unit in Celsius or Fahrenheit") Unit unit) {
 	}
@@ -41,7 +41,7 @@ public class WeatherService implements AiTool {
 		Celsius, Fahrenheit
 	}
 
-	public record Response(
+	public record GetWeatherResponse(
 		BigDecimal weather,
 		Unit unit) {
 	}
