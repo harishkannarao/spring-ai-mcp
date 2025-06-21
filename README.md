@@ -52,3 +52,7 @@ or
     export SPRING_PROFILES_ACTIVE="openai"
 
     ./docker-compose-run.sh
+
+### Run E2E test with MCP Host and MCP Servers
+
+    ./mvnw clean install -DskipE2E=false -pl spring-ai-mcp-e2e
