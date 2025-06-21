@@ -5,3 +5,7 @@ set -e
 
 # Print the commands as it is executed. Useful for debugging
 set -x
+
+docker --version
+
+docker compose --version
