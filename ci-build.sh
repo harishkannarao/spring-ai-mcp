@@ -7,3 +7,7 @@ set -e
 set -x
 
 ./mvnw clean install --batch-mode
+
+./docker-compose-run.sh
+
+./mvnw clean install -DskipE2E=false -pl spring-ai-mcp-e2e

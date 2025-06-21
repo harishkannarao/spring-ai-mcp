@@ -22,6 +22,7 @@
 		<module>spring-ai-mcp-server1</module>
 		<module>spring-ai-mcp-server2</module>
 		<module>spring-ai-mcp-client</module>
+		<module>spring-ai-mcp-e2e</module>
 	</modules>
 	<dependencies>
 		<dependency>
