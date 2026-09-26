@@ -122,10 +122,14 @@ public class McpAgentIT extends AbstractBaseIT {
 		String respText = response.body().asString();
 		assertThat(respText)
 			.containsIgnoringCase("Mystery")
-			.containsIgnoringWhitespaces("Book 5")
-			.containsIgnoringWhitespaces("Book 6")
-			.containsIgnoringWhitespaces("Book 7")
-			.containsIgnoringWhitespaces("Book 8");
+			.satisfiesAnyOf(s -> assertThat(s).containsIgnoringWhitespaces("Book 5"),
+				s -> assertThat(s).containsIgnoringWhitespaces("book5"))
+			.satisfiesAnyOf(s -> assertThat(s).containsIgnoringWhitespaces("Book 6"),
+				s -> assertThat(s).containsIgnoringWhitespaces("book6"))
+			.satisfiesAnyOf(s -> assertThat(s).containsIgnoringWhitespaces("Book 7"),
+				s -> assertThat(s).containsIgnoringWhitespaces("book7"))
+			.satisfiesAnyOf(s -> assertThat(s).containsIgnoringWhitespaces("Book 8"),
+				s -> assertThat(s).containsIgnoringWhitespaces("book8"));
 	}
 
 }

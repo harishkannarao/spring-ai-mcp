@@ -1,7 +1,3 @@
-networks:
-  spring-ai-mcp-network:
-    driver: bridge
-
 services:
   spring-ai-mcp-client:
     container_name: spring-ai-mcp-client
@@ -10,6 +6,7 @@ services:
       - "8080:8080"
     extra_hosts:
       - host.docker.internal:host-gateway
+    network_mode: host
     environment:
       - "SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
       - "SPRING_AI_MCP_SERVER1_URL=http://host.docker.internal:8081"
@@ -18,21 +15,21 @@ services:
       - "OPEN_AI_KEY=$OPEN_AI_KEY"
       - "AWS_AI_ACCESS_KEY_ID=$AWS_AI_ACCESS_KEY_ID"
       - "AWS_AI_SECRET_ACCESS_KEY=$AWS_AI_SECRET_ACCESS_KEY"
-    networks:
-      - spring-ai-mcp-network
 
   spring-ai-mcp-server1:
     container_name: spring-ai-mcp-server1
     image: "com.harishkannarao/spring-ai-mcp-server1:latest"
     ports:
       - "8081:8081"
-    networks:
-      - spring-ai-mcp-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    network_mode: host
 
   spring-ai-mcp-server2:
     container_name: spring-ai-mcp-server2
     image: "com.harishkannarao/spring-ai-mcp-server2:latest"
     ports:
       - "8082:8082"
-    networks:
-      - spring-ai-mcp-network
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    network_mode: host
