@@ -23,4 +23,4 @@ HEALTHCHECK --interval=5s \
 EXPOSE $SERVER_PORT
 
 # Run application
-CMD java -XX:MaxRAMPercentage=75.0 -XX:+PrintFlagsFinal -jar /var/application/spring-ai-mcp-server1-0.0.1-SNAPSHOT.jar
+CMD java -Djdk.httpclient.allowRestrictedHeaders=true -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true -XX:MaxRAMPercentage=75.0 -XX:+PrintFlagsFinal -jar /var/application/spring-ai-mcp-server1-0.0.1-SNAPSHOT.jar
