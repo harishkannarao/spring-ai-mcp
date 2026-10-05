@@ -6,7 +6,6 @@ services:
       - "8080:8080"
     extra_hosts:
       - host.docker.internal:host-gateway
-    network_mode: host
     environment:
       - "SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
       - "SPRING_AI_MCP_SERVER1_URL=http://host.docker.internal:8081"
@@ -23,7 +22,6 @@ services:
       - "8081:8081"
     extra_hosts:
       - host.docker.internal:host-gateway
-    network_mode: host
 
   spring-ai-mcp-server2:
     container_name: spring-ai-mcp-server2
@@ -32,4 +30,3 @@ services:
       - "8082:8082"
     extra_hosts:
       - host.docker.internal:host-gateway
-    network_mode: host
