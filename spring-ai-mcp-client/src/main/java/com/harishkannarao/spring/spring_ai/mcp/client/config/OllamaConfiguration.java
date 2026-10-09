@@ -1,12 +1,9 @@
 package com.harishkannarao.spring.spring_ai.mcp.client.config;
 
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
-import org.springframework.ai.ollama.api.OllamaOptions;
-import org.springframework.beans.factory.annotation.Qualifier;
+//import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +22,12 @@ public class OllamaConfiguration {
 	) {
 		return OllamaChatModel.builder()
 			.ollamaApi(ollamaApi)
-			.defaultOptions(
-				OllamaOptions.builder()
-					.model(ollamaChatModel)
-					.temperature(0.9)
-					.build()
-			)
+//			.defaultOptions(
+//				OllamaOptions.builder()
+//					.model(ollamaChatModel)
+//					.temperature(0.9)
+//					.build()
+//			)
 			.build();
 	}
 }

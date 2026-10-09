@@ -1,9 +1,9 @@
 package com.harishkannarao.spring.spring_ai.mcp.e2e;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import tools.jackson.databind.JsonNode;
 
 import java.util.List;
 import java.util.stream.StreamSupport;

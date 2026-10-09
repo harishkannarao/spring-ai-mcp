@@ -1,17 +1,15 @@
 package com.harishkannarao.spring.spring_ai.mcp.e2e;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 public abstract class AbstractBaseIT {
 
-	private final ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().build();
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	protected RequestSpecification mcpAgentRestClient() {
 		return RestAssured.given()
@@ -30,10 +28,6 @@ public abstract class AbstractBaseIT {
 	}
 
 	protected JsonNode toJsonNode(String json) {
-		try {
 			return objectMapper.readTree(json);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
 	}
 }

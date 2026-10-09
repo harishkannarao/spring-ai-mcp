@@ -5,7 +5,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(
-		@NotNull HttpServletRequest request,
-		@NotNull HttpServletResponse response,
-		@NotNull FilterChain filterChain) throws ServletException, IOException {
+		HttpServletRequest request,
+		HttpServletResponse response,
+		FilterChain filterChain) throws ServletException, IOException {
 		try {
 			Optional<Authentication> resolvedAuthentication = customAuthenticationResolver.resolve(request);
 			resolvedAuthentication.ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));

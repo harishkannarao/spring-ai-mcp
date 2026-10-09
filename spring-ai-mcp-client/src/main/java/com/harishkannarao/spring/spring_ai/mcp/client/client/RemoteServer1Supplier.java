@@ -49,7 +49,7 @@ public class RemoteServer1Supplier implements RemoteMcpClientSupplier {
 			.sync(HttpClientSseClientTransport
 				.builder(url)
 				.sseEndpoint(sseEndpoint)
-				.customizeRequest(perRequestHeaderSetter)
+//				.customizeRequest(perRequestHeaderSetter)
 				.build())
 			.build();
 		mcpSyncClient.initialize();

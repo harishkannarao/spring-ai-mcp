@@ -1,7 +1,5 @@
 package com.harishkannarao.spring.spring_ai.mcp.client.tools;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.harishkannarao.spring.spring_ai.mcp.client.client.RemoteMcpClientSupplier;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.spec.McpSchema;
@@ -13,6 +11,7 @@ import org.springframework.ai.tool.ToolCallback;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -69,20 +68,15 @@ public class ToolsHelper implements DisposableBean {
 	}
 
 	public List<McpSchema.Tool> getLocalToolsDefinition() {
-		return Stream.of(ToolCallbacks.from(localAiTools.toArray()))
-			.map(toolCallback -> {
-				try {
-					return new McpSchema.Tool(
-						toolCallback.getToolDefinition().name(),
-						toolCallback.getToolDefinition().description(),
-						objectMapper.readValue(
-							toolCallback.getToolDefinition().inputSchema(), McpSchema.JsonSchema.class)
-					);
-				} catch (JsonProcessingException e) {
-					throw new RuntimeException(e);
-				}
-			})
-			.toList();
+//		return Stream.of(ToolCallbacks.from(localAiTools.toArray()))
+//			.map(toolCallback -> new McpSchema.Tool(
+//				toolCallback.getToolDefinition().name(),
+//				toolCallback.getToolDefinition().description(),
+//				objectMapper.readValue(
+//					toolCallback.getToolDefinition().inputSchema(), McpSchema.JsonSchema.class)
+//			))
+//			.toList();
+		return Collections.emptyList();
 	}
 
 	public Map<String, List<McpSchema.Tool>> getRemoteToolsDefinition() {
