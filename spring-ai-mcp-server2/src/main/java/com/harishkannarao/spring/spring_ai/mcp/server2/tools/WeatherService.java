@@ -2,8 +2,8 @@ package com.harishkannarao.spring.spring_ai.mcp.server2.tools;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.ai.mcp.annotation.McpTool;
+import org.springframework.ai.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class WeatherService implements AiTool {
 		Map.entry("chennai", new BigDecimal("37"))
 	);
 
-	@Tool(name = "weatherService",
+	@McpTool(name = "weatherService",
 		description = """
 			Get the weather for the given location or village or town or city.
 			The getWeatherRequest takes location along with unit in Celsius or Fahrenheit.
@@ -33,8 +33,8 @@ public class WeatherService implements AiTool {
 	}
 
 	public record GetWeatherRequest(
-		@ToolParam(description = "Town or City or Village or Location of the weather") String location,
-		@ToolParam(description = "Unit in Celsius or Fahrenheit") Unit unit) {
+		@McpToolParam(description = "Town or City or Village or Location of the weather") String location,
+		@McpToolParam(description = "Unit in Celsius or Fahrenheit") Unit unit) {
 	}
 
 	public enum Unit {

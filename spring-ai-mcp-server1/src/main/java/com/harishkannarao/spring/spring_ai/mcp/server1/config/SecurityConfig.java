@@ -54,9 +54,10 @@ public class SecurityConfig {
 
 		auth.requestMatchers("/tool-definitions").permitAll();
 
+		auth.requestMatchers("/mcp/**").permitAll();
+
 		auth.requestMatchers(
-			"/sse",
-			"/mcp/message"
+			"/sse"
 		).hasAuthority("ROLE_SERVER_1_USER");
 
 		auth.anyRequest().denyAll();

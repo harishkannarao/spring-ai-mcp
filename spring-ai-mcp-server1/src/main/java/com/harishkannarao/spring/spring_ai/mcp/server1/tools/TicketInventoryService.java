@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.ai.chat.model.ToolContext;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.ai.mcp.annotation.McpTool;
+import org.springframework.ai.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
@@ -18,7 +18,7 @@ public class TicketInventoryService implements AiTool {
 
 	private static final Logger log = LoggerFactory.getLogger(TicketInventoryService.class);
 
-	@Tool(name = "ticketInventoryService",
+	@McpTool(name = "ticketInventoryService",
 		description = "Get the available ticket count by movie name")
 	public TicketLookupResponse apply(TicketLookupRequest lookupRequest, ToolContext toolContext) {
 		try {
@@ -36,7 +36,7 @@ public class TicketInventoryService implements AiTool {
 		}
 	}
 
-	public record TicketLookupRequest(@ToolParam(description = "The name of a movie") String movieName) {
+	public record TicketLookupRequest(@McpToolParam(description = "The name of a movie") String movieName) {
 	}
 
 	public record TicketLookupResponse(Long availability) {

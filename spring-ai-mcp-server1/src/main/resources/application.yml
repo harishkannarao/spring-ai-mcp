@@ -15,10 +15,10 @@ spring:
         enabled: true
         name: "spring-ai-mcp-server1"
         version: 1.0.0
+        protocol: STATELESS
         type: SYNC
-        base-url: "${server.servlet.context-path}"
-        sse-message-endpoint: "/mcp/message"
-        sse-endpoint: "/sse"
+        stateless:
+          mcp-endpoint: "/mcp"
 
 logging:
   pattern:
