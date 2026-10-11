@@ -13,10 +13,13 @@ spring:
     mcp:
       server:
         enabled: true
+        tool-callback-converter: true
         name: "spring-ai-mcp-server2"
         version: 1.0.0
         protocol: STATELESS
         type: SYNC
+        annotation-scanner:
+          enabled: true
         stateless:
           mcp-endpoint: "/mcp"
 

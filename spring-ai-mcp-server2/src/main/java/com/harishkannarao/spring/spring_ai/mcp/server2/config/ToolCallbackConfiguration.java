@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 @Configuration
 public class ToolCallbackConfiguration {
 
-	@Bean
-	public List<ToolCallback> toolCallbacks(List<AiTool> aiTools) {
-		return Stream.of(ToolCallbacks.from(aiTools.toArray())).toList();
-	}
+//	@Bean
+//	public List<ToolCallback> toolCallbacks(List<AiTool> aiTools) {
+//		return Stream.of(ToolCallbacks.from(aiTools.toArray())).toList();
+//	}
 
 }
