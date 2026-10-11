@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestController
+//@RestController
 public class RemoteToolDefinitionController {
 
 	private static final Logger log = LoggerFactory.getLogger(RemoteToolDefinitionController.class);

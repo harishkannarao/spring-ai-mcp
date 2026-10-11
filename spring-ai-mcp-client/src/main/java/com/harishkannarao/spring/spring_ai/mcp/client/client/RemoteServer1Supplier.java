@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-@Component
+//@Component
 public class RemoteServer1Supplier implements RemoteMcpClientSupplier {
 	private final String url;
 	private final String sseEndpoint;

@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Component
+//@Component
 public class ToolsHelper implements DisposableBean {
 	private final ScheduledExecutorService executorService =
 		Executors.newSingleThreadScheduledExecutor();
